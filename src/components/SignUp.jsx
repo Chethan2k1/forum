@@ -4,11 +4,16 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import SHA_256 from '../utils/crypto'
+import { Navigate } from 'react-router-dom'
+import ErrorMessage from './Error'
 
 const theme = createTheme();
 
 export default function SignUp() {
   // the error state 
+  const [error, setError] = React.useState(null)
+  const [redirect, setRedirect] = React.useState(false)
+  
   const PostRegisterDetails = async (name, email, password) => {
     const registerResp = await fetch('http://localhost:4000/register', {
       method: 'POST',
@@ -19,18 +24,20 @@ export default function SignUp() {
     })
 
     const content = await registerResp.json();
-    if (content == null) console.log('Wrong Credentials!')
-    console.log(content)
+    if (content.error != null) setError(content.error)
+    else setRedirect(true)
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
-
-    await PostRegisterDetails(data.get('name'), data.get('email'), SHA_256(data.get('password')));
+    const name = data.get('name'), email = data.get('email'), pass = data.get('password');
+    if (name == '' || email == '' || pass == '') setError("Fill in all details!")
+    else await PostRegisterDetails(name, email, SHA_256(pass));
   };
 
+  if (redirect) return <Navigate to='/login' /> 
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -80,6 +87,7 @@ export default function SignUp() {
                   autoComplete="new-password"
                 />
               </Grid>
+              {(error != null)?<ErrorMessage msg={error} />:<div></div>}
             </Grid>
             <Button
               type="submit"

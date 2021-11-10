@@ -4,12 +4,16 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import SHA_256 from '../utils/crypto'
+import { Navigate } from 'react-router-dom'
+import ErrorMessage from './Error'
 
 const theme = createTheme();
 
 export default function SignIn() {
   // error state
-  // the parent will have three states userid, name, bbpoints
+  const [error, setError] = React.useState(null)
+  const [redirect, setRedirect] = React.useState(false)
+  
   const PostLoginDetails = async (email, password) => {
     const loginResp = await fetch('http://localhost:4000/login', {
       method: 'POST',
@@ -20,23 +24,21 @@ export default function SignIn() {
     })
 
     const content = await loginResp.json();
-    if (content == null) console.log('Wrong Credentials!')
-    console.log(content) // content shouldn't have passoword field
+    if (content.error != null) setError(content.error)
+    else setRedirect(true)
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
     // check if email is valid and email and password are not empty
     // convert the password to somekind of hash to store in the DB
-    await PostLoginDetails(data.get('email'), SHA_256(data.get('password')));
+    const email = data.get('email'), pass = data.get('password')
+    if (email == '' || pass == '') setError("Fill in all details!")
+    else await PostLoginDetails(email, SHA_256(pass));
   };
 
+  if (redirect) return <Navigate to='/' />
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -73,6 +75,7 @@ export default function SignIn() {
               id="password"
               autoComplete="current-password"
             />
+            {(error != null) ? <ErrorMessage msg={error} /> : <div></div>}
             <Button
               type="submit"
               fullWidth

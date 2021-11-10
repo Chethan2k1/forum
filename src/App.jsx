@@ -1,6 +1,7 @@
 import React from 'react'
 import SignIn from './components/SignIn'
 import SignUp from './components/SignUp'
+import PostsList from './components/PostsList'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
  
 function App() {
@@ -8,8 +9,9 @@ function App() {
         <BrowserRouter>
             <div>
                 <Routes>
-                    <Route path='/login' element={<SignIn />} />
-                    <Route path='/register' element={<SignUp />} />
+                    <Route path='/' exact element={<PostsList />} />
+                    <Route path='/login' exact element={<SignIn />} />
+                    <Route path='/register' exact element={<SignUp />} />
                 </Routes>
             </div>
         </BrowserRouter>
