@@ -9,11 +9,11 @@ import ErrorMessage from './Error'
 
 const theme = createTheme();
 
-export default function SignIn() {
+export default function SignIn({setUsername, setPoints}) {
   // error state
   const [error, setError] = React.useState(null)
   const [redirect, setRedirect] = React.useState(false)
-  
+
   const PostLoginDetails = async (email, password) => {
     const loginResp = await fetch('http://localhost:4000/login', {
       method: 'POST',
@@ -24,8 +24,13 @@ export default function SignIn() {
     })
 
     const content = await loginResp.json();
+    console.log(content)
     if (content.error != null) setError(content.error)
-    else setRedirect(true)
+    else { 
+      setRedirect(true)
+      setUsername(content.username)
+      setPoints(content.bbpoints)
+    }
   };
 
   const handleSubmit = async (event) => {

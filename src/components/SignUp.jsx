@@ -13,14 +13,14 @@ export default function SignUp() {
   // the error state 
   const [error, setError] = React.useState(null)
   const [redirect, setRedirect] = React.useState(false)
-  
-  const PostRegisterDetails = async (name, email, password) => {
+
+  const PostRegisterDetails = async (username, email, password) => {
     const registerResp = await fetch('http://localhost:4000/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ name, email, password })
+      body: JSON.stringify({ username, email, password })
     })
 
     const content = await registerResp.json();
@@ -32,12 +32,12 @@ export default function SignUp() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
-    const name = data.get('name'), email = data.get('email'), pass = data.get('password');
-    if (name == '' || email == '' || pass == '') setError("Fill in all details!")
-    else await PostRegisterDetails(name, email, SHA_256(pass));
+    const username = data.get('username'), email = data.get('email'), pass = data.get('password');
+    if (username == '' || email == '' || pass == '') setError("Fill in all details!")
+    else await PostRegisterDetails(username, email, SHA_256(pass));
   };
 
-  if (redirect) return <Navigate to='/login' /> 
+  if (redirect) return <Navigate to='/login' />
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -58,11 +58,11 @@ export default function SignUp() {
               <Grid item xs={12}>
                 <TextField
                   autoComplete="given-name"
-                  name="name"
+                  name="username"
                   required
                   fullWidth
-                  id="name"
-                  label="Name"
+                  id="username"
+                  label="Username"
                   autoFocus
                 />
               </Grid>
@@ -87,7 +87,7 @@ export default function SignUp() {
                   autoComplete="new-password"
                 />
               </Grid>
-              {(error != null)?<ErrorMessage msg={error} />:<div></div>}
+              {(error != null) ? <ErrorMessage msg={error} /> : <div></div>}
             </Grid>
             <Button
               type="submit"
