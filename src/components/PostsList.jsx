@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { CssBaseline, Grid } from '@mui/material'
+import { CssBaseline } from '@mui/material'
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import PostsListView from './PostsListView'

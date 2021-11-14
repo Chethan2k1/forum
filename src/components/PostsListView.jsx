@@ -1,15 +1,11 @@
-import moment from 'moment';
 import * as React from 'react';
-import { Grid, Typography, TextField, Link } from '@mui/material'
+import { Grid, Typography, TextField } from '@mui/material'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { Navigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom';
+import getTime from '../utils/time';
 
 const PostsListView = ({ posts }) => {
     const [redirectCreatePost, setRedirectCreatePost] = React.useState(false)
-
-    const getTime = (timestamp) => {
-        return moment.utc(timestamp).fromNow()
-    }
 
     if (redirectCreatePost) return (<Navigate to='createPost' />)
     return (
