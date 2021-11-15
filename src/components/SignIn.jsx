@@ -9,7 +9,7 @@ import ErrorMessage from './Error'
 
 const theme = createTheme();
 
-export default function SignIn({setUsername, setPoints}) {
+export default function SignIn({setUsername, setPoints, setIsloggedin, setToken}) {
   // error state
   const [error, setError] = React.useState(null)
   const [redirect, setRedirect] = React.useState(false)
@@ -30,6 +30,8 @@ export default function SignIn({setUsername, setPoints}) {
       setRedirect(true)
       setUsername(content.username)
       setPoints(content.bbpoints)
+      setIsloggedin(true) // setting it as logged in
+      setToken(content.token)
     }
   };
 

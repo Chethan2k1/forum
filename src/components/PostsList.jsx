@@ -14,7 +14,7 @@ const theme = createTheme({
     }
 });
 
-const PostsLists = () => {
+const PostsLists = ({ isloggedin }) => {
     const [error, setError] = useState('')
     const [posts, setPosts] = useState([])
 
@@ -40,7 +40,8 @@ const PostsLists = () => {
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="md" color="primary">
                 <CssBaseline />
-                {(error != '') ? <ErrorMessage msg={error} /> : <PostsListView posts={posts} />}
+                {(error != '') ? <ErrorMessage msg={error} /> : <div></div>}
+                <PostsListView posts={posts} setError={setError} isloggedin={isloggedin} />
             </Container>
         </ThemeProvider>
     );

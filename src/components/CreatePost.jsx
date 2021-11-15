@@ -17,14 +17,14 @@ const converter = new Showdown.Converter({
     tasklists: true
 });
 
-const CreatePost = ({ username }) => {
+const CreatePost = ({ username, token }) => {
     const [body, setBody] = React.useState("**Hello world!!!**");
     const [title, setTitle] = React.useState("");
     const [selectedTab, setSelectedTab] = React.useState("write");
     const [error, setError] = React.useState(false);
     const [postid, setPostid] = React.useState('');
     const [redirect, setRedirect] = React.useState(false)
-
+    console.log("Token : " + token);
     const onSubmit = async () => {
         if (title == '' || body == '') {
             setError('All fields must be filled!')
@@ -34,6 +34,7 @@ const CreatePost = ({ username }) => {
         const createPostResult = await fetch('http://localhost:4000/createpost', {
             method: 'POST',
             headers: {
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
             // hard coding category for now

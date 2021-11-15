@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom'
 import getTime from '../utils/time';
 import ErrorMessage from './Error';
 import * as Showdown from "showdown";
-import Markdown from 'markdown-to-jsx';
+import ReactMarkdown from 'react-markdown'
 
 const theme = createTheme();
 
@@ -20,7 +20,7 @@ const MyHorizonatalLine = () => {
 
 const MyImageTag = ({ children, ...props }) => {
     return (
-        <img {...props} style={{width: 400}} />
+        <img {...props} style={{ width: 400 }} />
     )
 }
 
@@ -74,7 +74,6 @@ const ShowPost = () => {
                             backgroundColor: '#D3D3D3',
                         }}>
                         <Grid container direction="column">
-                            <myHorizonatalLine />
                             <Grid item container justify="flex-end">
                                 <Grid item style={{ marginTop: 5, marginLeft: 20 }}> <b>{`c/${post.category}`}</b> </Grid>
                                 <Grid item style={{ marginTop: 5, marginLeft: 5 }}> {`  posted by u/${post.username}  ${getTime(post.createdAt)}`} </Grid>
@@ -83,8 +82,15 @@ const ShowPost = () => {
                         <Grid item container alignItems="center" align="left" style={{ width: 600, marginLeft: 20, marginRight: 20 }}>
                             <Typography variant="h6">{post.postHeading}</Typography>
                         </Grid>
+
                         <Grid align="left" style={{ width: 600, marginLeft: 20, marginRight: 20 }}>
-                            <Markdown options={{ overrides: { hr: { component: MyHorizonatalLine }, img: { component: MyImageTag } } }} children={post.postContent} />
+                            {/* <Markdown options={{ overrides: { hr: { component: MyHorizonatalLine }, img: { component: MyImageTag } } }} children={post.postContent} /> */}
+                            <ReactMarkdown
+                                children={post.postContent}
+                                components={{
+                                    hr: MyHorizonatalLine,
+                                    img: MyImageTag
+                                }} />
                         </Grid>
                     </Grid>
                 </Grid>

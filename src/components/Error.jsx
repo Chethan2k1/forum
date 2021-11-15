@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 
 const ErrorMessage = ({ msg }) => {
     return (
-        <Grid item xs={12}>
+        <Grid item xs={12} style={{ margin: 5 }}>
             <Typography align='center' color="red">
                 {msg}
             </Typography>
