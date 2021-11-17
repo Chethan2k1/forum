@@ -33,11 +33,10 @@ function App() {
                         ? <Route path='/createPost' element={
                             <CreatePost
                                 token={token}
-                                username={username}
                             />}
                         />
                         : <Route />}
-                    <Route path='/post/:postid' element={<ShowPost />} />
+                    <Route path='/post/:postid' element={<ShowPost isloggedin={isloggedin} token={token} />} />
                     <Route path='/about/:username' element={<About username={username} />} />
                 </Routes>
             </div>

@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Grid, Typography, TextField, Link } from '@mui/material'
+import { Grid, Typography, TextField } from '@mui/material'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
 import getTime from '../utils/time';
 
 const PostsListView = ({ posts, setError, isloggedin }) => {
@@ -40,9 +40,8 @@ const PostsListView = ({ posts, setError, isloggedin }) => {
             {
                 posts.map(({ category, username, postHeading, createdAt, postid }) => {
                     return (
-                        <a href={`post/${postid}`} style={{ textDecoration: 'none', color: 'black' }}>
+                        <Link key={postid} to={`post/${postid}`} style={{ textDecoration: 'none', color: 'black' }}>
                             <Grid
-                                key={postid}
                                 item container
                                 alignItems="center"
                                 style={{
@@ -61,7 +60,7 @@ const PostsListView = ({ posts, setError, isloggedin }) => {
                                     <Typography variant="h6" style={{ width: 600, marginLeft: 20, marginRight: 20 }}>{postHeading}</Typography>
                                 </Grid>
                             </Grid>
-                        </a>
+                        </Link>
                     )
                 })
             }

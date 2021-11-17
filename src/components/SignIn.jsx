@@ -24,7 +24,6 @@ export default function SignIn({setUsername, setPoints, setIsloggedin, setToken}
     })
 
     const content = await loginResp.json();
-    console.log(content)
     if (content.error != null) setError(content.error)
     else { 
       setRedirect(true)

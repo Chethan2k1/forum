@@ -17,14 +17,14 @@ const converter = new Showdown.Converter({
     tasklists: true
 });
 
-const CreatePost = ({ username, token }) => {
+const CreatePost = ({ token }) => {
     const [body, setBody] = React.useState("**Hello world!!!**");
     const [title, setTitle] = React.useState("");
     const [selectedTab, setSelectedTab] = React.useState("write");
     const [error, setError] = React.useState(false);
     const [postid, setPostid] = React.useState('');
     const [redirect, setRedirect] = React.useState(false)
-    console.log("Token : " + token);
+    
     const onSubmit = async () => {
         if (title == '' || body == '') {
             setError('All fields must be filled!')
@@ -39,7 +39,6 @@ const CreatePost = ({ username, token }) => {
             },
             // hard coding category for now
             body: JSON.stringify({
-                username,
                 category: 'MATH',
                 postHeading: title,
                 postContent: body
@@ -60,7 +59,6 @@ const CreatePost = ({ username, token }) => {
             <Container component="main" maxWidth="md" color="primary">
                 <CssBaseline />
                 <Grid container
-                    // align="center"
                     alignItems="center"
                     justify="center"
                     direction="column">
@@ -77,7 +75,6 @@ const CreatePost = ({ username, token }) => {
                             name="title"
                             value={title}
                             onChange={(event) => {
-                                console.log(event.target.value)
                                 setTitle(event.target.value)
                             }}
                             autoComplete="title"

@@ -1,39 +1,21 @@
 import * as React from 'react';
-import { CssBaseline, Grid, Typography } from '@mui/material'
+import { CssBaseline, Grid, Typography, Button } from '@mui/material'
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useParams } from 'react-router-dom'
 import getTime from '../utils/time';
 import ErrorMessage from './Error';
-import * as Showdown from "showdown";
 import ReactMarkdown from 'react-markdown'
+import CommentsList from './CommentsList'
+import MyHorizonatalLine from './Markdown/HorizontalLine'
+import MyImageTag from './Markdown/Image'
 
 const theme = createTheme();
 
-const MyHorizonatalLine = () => {
-    return (
-        <div style={{ width: 540 }}>
-            <hr />
-        </div>
-    )
-}
-
-const MyImageTag = ({ children, ...props }) => {
-    return (
-        <img {...props} style={{ width: 400 }} />
-    )
-}
-
-const ShowPost = () => {
+const ShowPost = ({ token, isloggedin }) => {
     const { postid } = useParams()
     const [post, setPost] = React.useState({})
     const [error, setError] = React.useState('')
-    const converter = new Showdown.Converter({
-        tables: true,
-        simplifiedAutoLink: true,
-        strikethrough: true,
-        tasklists: true
-    });
 
     const fetchPost = async () => {
         const postResults = await fetch(`http://localhost:4000/post/?postid=${postid}`, {
@@ -50,6 +32,8 @@ const ShowPost = () => {
             setPost(content)
         }
     }
+
+    console.log(token)
 
     React.useEffect(async () => {
         await fetchPost();
@@ -82,9 +66,7 @@ const ShowPost = () => {
                         <Grid item container alignItems="center" align="left" style={{ width: 600, marginLeft: 20, marginRight: 20 }}>
                             <Typography variant="h6">{post.postHeading}</Typography>
                         </Grid>
-
                         <Grid align="left" style={{ width: 600, marginLeft: 20, marginRight: 20 }}>
-                            {/* <Markdown options={{ overrides: { hr: { component: MyHorizonatalLine }, img: { component: MyImageTag } } }} children={post.postContent} /> */}
                             <ReactMarkdown
                                 children={post.postContent}
                                 components={{
@@ -94,6 +76,7 @@ const ShowPost = () => {
                         </Grid>
                     </Grid>
                 </Grid>
+                <CommentsList postid={postid} token={token} />
             </Container>
         </ThemeProvider>
     );
