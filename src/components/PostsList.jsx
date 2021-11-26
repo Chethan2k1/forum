@@ -41,7 +41,12 @@ const PostsLists = ({ isloggedin }) => {
             <Container component="main" maxWidth="md" color="primary">
                 <CssBaseline />
                 {(error != '') ? <ErrorMessage msg={error} /> : <div></div>}
-                <PostsListView posts={posts} setError={setError} isloggedin={isloggedin} />
+                <PostsListView 
+                    posts={posts} 
+                    setError={setError} 
+                    isloggedin={isloggedin} 
+                    showButtons={false}
+                />
             </Container>
         </ThemeProvider>
     );

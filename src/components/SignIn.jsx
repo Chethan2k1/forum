@@ -9,7 +9,7 @@ import ErrorMessage from './Error'
 
 const theme = createTheme();
 
-export default function SignIn({setUsername, setPoints, setIsloggedin, setToken}) {
+export default function SignIn({setUsername, setPoints, setIsloggedin, setToken, setIsmod, setIsadmin}) {
   // error state
   const [error, setError] = React.useState(null)
   const [redirect, setRedirect] = React.useState(false)
@@ -31,6 +31,9 @@ export default function SignIn({setUsername, setPoints, setIsloggedin, setToken}
       setPoints(content.bbpoints)
       setIsloggedin(true) // setting it as logged in
       setToken(content.token)
+      // if the mod_categories has no categories then the user is not a moderator
+      if(content.mod_categories.length != 0) setIsmod(true)
+      setIsadmin(content.isadmin)
     }
   };
 

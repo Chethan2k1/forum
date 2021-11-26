@@ -8,6 +8,7 @@ import ErrorMessage from './Error'
 import "react-mde/lib/styles/css/react-mde-all.css";
 import "./style.css";
 import { Navigate } from 'react-router';
+import CategoryDropDown from './CategoryDropDown';
 
 const theme = createTheme();
 const converter = new Showdown.Converter({
@@ -23,10 +24,12 @@ const CreatePost = ({ token }) => {
     const [selectedTab, setSelectedTab] = React.useState("write");
     const [error, setError] = React.useState(false);
     const [postid, setPostid] = React.useState('');
-    const [redirect, setRedirect] = React.useState(false)
-    
+    const [redirect, setRedirect] = React.useState(false);
+    // state for category chooser
+    const [category, setCategory] = React.useState('');
+
     const onSubmit = async () => {
-        if (title == '' || body == '') {
+        if (title == '' || body == '' || category == '') {
             setError('All fields must be filled!')
             return;
         };
@@ -37,9 +40,8 @@ const CreatePost = ({ token }) => {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
-            // hard coding category for now
             body: JSON.stringify({
-                category: 'MATH',
+                category,
                 postHeading: title,
                 postContent: body
             })
@@ -106,29 +108,37 @@ const CreatePost = ({ token }) => {
                             />
                         </Grid>
                         {(error != null) ? <ErrorMessage msg={error} /> : <div></div>}
-                        <Grid container spacing={1} justifyContent="flex-end">
-                            <Grid item>
-                                <Button
-                                    type="submit"
-                                    fullWidth
-                                    variant="contained"
-                                    onClick={onSubmit}
-                                    sx={{ mt: 3, mb: 2 }}
-                                >
-                                    Post
-                                </Button>
+                        <Grid container>
+                            <Grid container style={{ width: '50%' }}>
+                                <CategoryDropDown
+                                    setError={setError}
+                                    category={category}
+                                    setCategory={setCategory}
+                                />
                             </Grid>
-                            <Grid item>
-                                <Button
-                                    type="submit"
-                                    component={Link}
-                                    to="/"
-                                    fullWidth
-                                    variant="contained"
-                                    sx={{ mt: 3, mb: 2 }}
-                                >
-                                    Discard
-                                </Button>
+                            <Grid container spacing={1} justifyContent="flex-end" style={{ width: '50%' }}>
+                                <Grid item>
+                                    <Button
+                                        type="submit"
+                                        variant="contained"
+                                        onClick={onSubmit}
+                                        sx={{ mt: 3, mb: 2 }}
+                                    >
+                                        Post
+                                    </Button>
+                                </Grid>
+                                <Grid item>
+                                    <Button
+                                        type="submit"
+                                        component={Link}
+                                        to="/"
+                                        fullWidth
+                                        variant="contained"
+                                        sx={{ mt: 3, mb: 2 }}
+                                    >
+                                        Discard
+                                    </Button>
+                                </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
@@ -138,4 +148,4 @@ const CreatePost = ({ token }) => {
     );
 }
 
-export default CreatePost
+export default CreatePost;

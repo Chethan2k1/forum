@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CssBaseline, Grid, Typography, Button } from '@mui/material'
+import { CssBaseline, Grid, Typography } from '@mui/material'
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useParams } from 'react-router-dom'
@@ -9,6 +9,7 @@ import ReactMarkdown from 'react-markdown'
 import CommentsList from './CommentsList'
 import MyHorizonatalLine from './Markdown/HorizontalLine'
 import MyImageTag from './Markdown/Image'
+import ReportIcon from '@mui/icons-material/Report';
 
 const theme = createTheme();
 
@@ -33,7 +34,23 @@ const ShowPost = ({ token, isloggedin }) => {
         }
     }
 
-    console.log(token)
+    const postReport = async () => {
+        const reportResp = await fetch(`http://localhost:4000/report`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }, 
+            body: JSON.stringify({
+                reportedid: postid,
+                category: post.category,
+                ispost: true
+            })
+        })
+
+        const report = await reportResp.json()
+        if(report.error != null) setError(report.error)
+    }
 
     React.useEffect(async () => {
         await fetchPost();
@@ -61,6 +78,9 @@ const ShowPost = ({ token, isloggedin }) => {
                             <Grid item container justify="flex-end">
                                 <Grid item style={{ marginTop: 5, marginLeft: 20 }}> <b>{`c/${post.category}`}</b> </Grid>
                                 <Grid item style={{ marginTop: 5, marginLeft: 5 }}> {`  posted by u/${post.username}  ${getTime(post.createdAt)}`} </Grid>
+                                <Grid item justify="flex-start" style={{ marginTop: 5, marginLeft: 5 }}>
+                                    <ReportIcon style={{ cursor: 'pointer' }} onClick={postReport} />
+                                </Grid>
                             </Grid>
                         </Grid>
                         <Grid item container alignItems="center" align="left" style={{ width: 600, marginLeft: 20, marginRight: 20 }}>
@@ -76,7 +96,11 @@ const ShowPost = ({ token, isloggedin }) => {
                         </Grid>
                     </Grid>
                 </Grid>
-                <CommentsList postid={postid} token={token} />
+                <CommentsList 
+                    category={post.category}
+                    postid={postid} 
+                    token={token} 
+                />
             </Container>
         </ThemeProvider>
     );

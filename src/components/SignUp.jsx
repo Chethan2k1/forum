@@ -25,7 +25,9 @@ export default function SignUp() {
 
     const content = await registerResp.json();
     if (content.error != null) setError(content.error)
-    else setRedirect(true)
+    else { 
+      setRedirect(true) 
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -37,7 +39,7 @@ export default function SignUp() {
     else await PostRegisterDetails(username, email, SHA_256(pass));
   };
 
-  if (redirect) return <Navigate to='/login' />
+  if (redirect) return (<Navigate to='/login' />);
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">

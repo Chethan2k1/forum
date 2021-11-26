@@ -18,7 +18,7 @@ const theme = createTheme({
     }
 });
 
-const CommentsList = ({ isloggedin, postid, token }) => {
+const CommentsList = ({ isloggedin, postid, token, category }) => {
     const [error, setError] = useState('')
     const [comments, setComments] = useState([])
     const [body, setBody] = React.useState("**Hello world!!!**");
@@ -115,7 +115,12 @@ const CommentsList = ({ isloggedin, postid, token }) => {
                             </Grid>
                         </Grid>
                     </Grid>
-                    <CommentsListView comments={comments} setError={setError} isloggedin={isloggedin} />
+                    <CommentsListView
+                        token={token}
+                        comments={comments}
+                        setError={setError}
+                        category={category}
+                        isloggedin={isloggedin} />
                 </Grid>
             </Container>
         </ThemeProvider>
