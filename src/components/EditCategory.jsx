@@ -16,7 +16,7 @@ const EditCategory = ({ token }) => {
             return
         }
 
-        const addcatresp = await fetch(`http://localhost:8000/createcat`, {
+        const addcatresp = await fetch(`https://forum-backend.azurewebsites.net/createcat`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ const EditCategory = ({ token }) => {
             return
         }
 
-        const removecatResp = await fetch(`http://localhost:8000/removecat`, {
+        const removecatResp = await fetch(`https://forum-backend.azurewebsites.net/removecat`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',

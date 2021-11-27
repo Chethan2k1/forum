@@ -19,7 +19,7 @@ const ShowPost = ({ token, isloggedin }) => {
     const [error, setError] = React.useState('')
 
     const fetchPost = async () => {
-        const postResults = await fetch(`http://localhost:8000/post/?postid=${postid}`, {
+        const postResults = await fetch(`https://forum-backend.azurewebsites.net/post/?postid=${postid}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -35,7 +35,7 @@ const ShowPost = ({ token, isloggedin }) => {
     }
 
     const postReport = async () => {
-        const reportResp = await fetch(`http://localhost:8000/report`, {
+        const reportResp = await fetch(`https://forum-backend.azurewebsites.net/report`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -23,7 +23,7 @@ const CategoryDropDown = ({ setError, category, setCategory }) => {
     }
 
     const getCategories = async () => {
-        const categoriesResults = await fetch(`http://localhost:8000/getcategories?keyword=${keyword}`, {
+        const categoriesResults = await fetch(`https://forum-backend.azurewebsites.net/getcategories?keyword=${keyword}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

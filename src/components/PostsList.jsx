@@ -19,7 +19,7 @@ const PostsLists = ({ isloggedin }) => {
     const [posts, setPosts] = useState([])
 
     const fetchPosts = async () => {
-        const postsResults = await fetch(`http://localhost:8000/posts`, {
+        const postsResults = await fetch(`https://forum-backend.azurewebsites.net/posts`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

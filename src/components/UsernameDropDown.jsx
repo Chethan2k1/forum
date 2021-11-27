@@ -16,7 +16,7 @@ const UsernameDropDown = ({ setError, username, setUsername }) => {
     }
 
     const getUsers = async () => {
-        const usersResults = await fetch(`http://localhost:8000/getusers?keyword=${keyword}`, {
+        const usersResults = await fetch(`https://forum-backend.azurewebsites.net/getusers?keyword=${keyword}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

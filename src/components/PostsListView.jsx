@@ -10,7 +10,7 @@ const PostsListView = ({ token, posts, setError, isloggedin, showButtons, setPos
     const [redirectCreatePost, setRedirectCreatePost] = React.useState(false)
 
     const deleteHandler = async (postid) => {
-        const deleteResp = await fetch(`http://localhost:8000/removepost`, {
+        const deleteResp = await fetch(`https://forum-backend.azurewebsites.net/removepost`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ const PostsListView = ({ token, posts, setError, isloggedin, showButtons, setPos
     }
 
     const unreportHandler = async (postid) => {
-        const unreportResp = await fetch(`http://localhost:8000/unreport`, {
+        const unreportResp = await fetch(`https://forum-backend.azurewebsites.net/unreport`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -34,7 +34,7 @@ const CreatePost = ({ token }) => {
             return;
         };
 
-        const createPostResult = await fetch(`http://localhost:8000/createpost`, {
+        const createPostResult = await fetch(`https://forum-backend.azurewebsites.net/createpost`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,

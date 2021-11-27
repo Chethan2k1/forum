@@ -15,7 +15,7 @@ export default function SignUp() {
   const [redirect, setRedirect] = React.useState(false)
 
   const PostRegisterDetails = async (username, email, password) => {
-    const registerResp = await fetch(`http://localhost:8000/register`, {
+    const registerResp = await fetch(`https://forum-backend.azurewebsites.net/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
