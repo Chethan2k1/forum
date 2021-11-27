@@ -10,7 +10,7 @@ const Modcontrol = ({ token }) => {
     const [reported, setReported] = React.useState({ posts: [], comments: [] })
 
     const fetchReported = async () => {
-        const reportedResponse = await fetch('http://localhost:4000/reported', {
+        const reportedResponse = await fetch(`http://localhost:8000/reported`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

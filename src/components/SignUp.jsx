@@ -15,7 +15,7 @@ export default function SignUp() {
   const [redirect, setRedirect] = React.useState(false)
 
   const PostRegisterDetails = async (username, email, password) => {
-    const registerResp = await fetch('http://localhost:4000/register', {
+    const registerResp = await fetch(`http://localhost:8000/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

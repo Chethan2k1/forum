@@ -31,7 +31,7 @@ const CommentsList = ({ isloggedin, postid, token, category }) => {
     });
 
     const fetchComments = async () => {
-        const commentsResults = await fetch(`http://localhost:4000/getcomments?postid=${postid}`, {
+        const commentsResults = await fetch(`http://localhost:8000/getcomments?postid=${postid}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -44,7 +44,7 @@ const CommentsList = ({ isloggedin, postid, token, category }) => {
     }
 
     const postComment = async () => {
-        const commResults = await fetch(`http://localhost:4000/createcomment`, {
+        const commResults = await fetch(`http://localhost:8000/createcomment`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,

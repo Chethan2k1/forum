@@ -20,7 +20,7 @@ const EditModerator = ({ token }) => {
             return
         }
 
-        const addmodresp = await fetch('http://localhost:4000/createmod', {
+        const addmodresp = await fetch(`http://localhost:8000/createmod`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -43,7 +43,7 @@ const EditModerator = ({ token }) => {
             return
         }
 
-        const removemodresp = await fetch('http://localhost:4000/removemod', {
+        const removemodresp = await fetch(`http://localhost:8000/removemod`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',

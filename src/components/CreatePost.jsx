@@ -34,7 +34,7 @@ const CreatePost = ({ token }) => {
             return;
         };
 
-        const createPostResult = await fetch('http://localhost:4000/createpost', {
+        const createPostResult = await fetch(`http://localhost:8000/createpost`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,

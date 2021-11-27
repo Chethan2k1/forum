@@ -10,7 +10,7 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
 const CommentsListView = ({ token, comments, setComments, setError, category, isloggedin = true, showButtons = false }) => {
     const commentReport = async (commentid) => {
-        const reportResp = await fetch(`http://localhost:4000/report`, {
+        const reportResp = await fetch(`http://localhost:8000/report`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ const CommentsListView = ({ token, comments, setComments, setError, category, is
     }
 
     const deleteHandler = async (commentid) => {
-        const deleteResp = await fetch('http://localhost:4000/removecomment', {
+        const deleteResp = await fetch(`http://localhost:8000/removecomment`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ const CommentsListView = ({ token, comments, setComments, setError, category, is
     }
 
     const unreportHandler = async (commentid) => {
-        const unreportResp = await fetch('http://localhost:4000/unreport', {
+        const unreportResp = await fetch(`http://localhost:8000/unreport`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

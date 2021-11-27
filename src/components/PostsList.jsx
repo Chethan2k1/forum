@@ -19,7 +19,7 @@ const PostsLists = ({ isloggedin }) => {
     const [posts, setPosts] = useState([])
 
     const fetchPosts = async () => {
-        const postsResults = await fetch('http://localhost:4000/posts', {
+        const postsResults = await fetch(`http://localhost:8000/posts`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -41,10 +41,10 @@ const PostsLists = ({ isloggedin }) => {
             <Container component="main" maxWidth="md" color="primary">
                 <CssBaseline />
                 {(error != '') ? <ErrorMessage msg={error} /> : <div></div>}
-                <PostsListView 
-                    posts={posts} 
-                    setError={setError} 
-                    isloggedin={isloggedin} 
+                <PostsListView
+                    posts={posts}
+                    setError={setError}
+                    isloggedin={isloggedin}
                     showButtons={false}
                 />
             </Container>

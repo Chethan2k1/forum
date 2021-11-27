@@ -15,7 +15,7 @@ export default function SignIn({setUsername, setPoints, setIsloggedin, setToken,
   const [redirect, setRedirect] = React.useState(false)
 
   const PostLoginDetails = async (email, password) => {
-    const loginResp = await fetch('http://localhost:4000/login', {
+    const loginResp = await fetch(`http://localhost:8000/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
