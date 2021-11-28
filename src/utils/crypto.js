@@ -1,3 +1,5 @@
+// util function to create SHA256 of str using in signin and signup
+
 import { createHash } from 'crypto'
 
 const SHA265 = (str) => {

@@ -1,3 +1,5 @@
+// Component that shows single post
+
 import * as React from 'react';
 import { CssBaseline, Grid, Typography } from '@mui/material'
 import Container from '@mui/material/Container';
@@ -18,6 +20,7 @@ const ShowPost = ({ token, isloggedin }) => {
     const [post, setPost] = React.useState({})
     const [error, setError] = React.useState('')
 
+    // REST call to get details of the current post
     const fetchPost = async () => {
         const postResults = await fetch(`https://forum-backend.azurewebsites.net/post/?postid=${postid}`, {
             method: 'GET',
@@ -34,6 +37,7 @@ const ShowPost = ({ token, isloggedin }) => {
         }
     }
 
+    // REST call to report a post
     const postReport = async () => {
         const reportResp = await fetch(`https://forum-backend.azurewebsites.net/report`, {
             method: 'POST',
@@ -52,6 +56,7 @@ const ShowPost = ({ token, isloggedin }) => {
         if(report.error != null) setError(report.error)
     }
 
+    // Side-Effect that is called everytime there is a change in any state
     React.useEffect(async () => {
         await fetchPost();
     }, [])

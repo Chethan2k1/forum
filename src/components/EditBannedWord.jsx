@@ -1,68 +1,68 @@
-// The parent Component which is used for Add/Remove Category
+// The parent Component which is used for Add/Remove Banned Words
 
 import * as React from 'react';
 import { Grid, Container, Typography, Button } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import CategoryDropDown from './CategoryDropDown'
+import BannedWordDropDown from './BannedWordDropDown'
 
-const EditCategory = ({ token, setError, setSuccess }) => {
+const EditBannedWord = ({ token, setError, setSuccess }) => {
     const [anchorEl, setAnchorEl] = React.useState(null)
-    const [category, setCategory] = React.useState('')
+    const [bannedWord, setBannedWord] = React.useState('')
 
-    // REST call to add Category
-    const AddCategoryHandler = async () => {
-        if (category == '') {
-            setError("Name the Category!")
+    // REST call to add Banned Word
+    const AddBannedWordHandler = async () => {
+        if (bannedWord == '') {
+            setError("Enter word!")
             return
         }
 
-        const addcatresp = await fetch(`https://forum-backend.azurewebsites.net/createcat`, {
+        const addbannedwordresp = await fetch(`https://forum-backend.azurewebsites.net/createbannedword`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({
-                name: category
+                word: bannedWord
             })
         })
 
-        const resp = await addcatresp.json()
-        if (resp.error != null) { 
+        const resp = await addbannedwordresp.json()
+        if (resp.error != null) {
             setError(resp.error)
             setSuccess('')
         } else {
             setError('')
-            setSuccess(`Successfully added ${category}!`)
+            setSuccess(`Successfully added "${bannedWord}" to banned words!`)
         }
     }
 
-    // REST call to remove Category
-    const RemoveCategoryHandler = async () => {
-        if (category == '') {
-            setError("Name the Category!")
+    // REST call to remove Banned Word
+    const RemoveBannedWordHandler = async () => {
+        if (bannedWord == '') {
+            setError("Enter word!")
             return
         }
 
-        const removecatResp = await fetch(`https://forum-backend.azurewebsites.net/removecat`, {
+        const removebannedwordResp = await fetch(`https://forum-backend.azurewebsites.net/removebannedword`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({
-                name: category
+                word: bannedWord
             })
         })
 
-        const resp = await removecatResp.json()
-        if (resp.error != null) { 
+        const resp = await removebannedwordResp.json()
+        if (resp.error != null) {
             setError(resp.error)
             setSuccess('')
-        } else { 
+        } else {
             setError('')
-            setSuccess(`Successfully removed ${category}!`)
+            setSuccess(`Removed "${bannedWord}" from banned words!`)
         }
     }
 
@@ -75,28 +75,28 @@ const EditCategory = ({ token, setError, setSuccess }) => {
                 direction="column"
             >
                 <Typography variant="h5">
-                    Add/Remove Category
+                    Add/Remove Banned Word
                 </Typography>
-                <CategoryDropDown
+                <BannedWordDropDown
                     anchorEl={anchorEl}
                     setAnchorEl={setAnchorEl}
                     setError={setError}
-                    category={category}
-                    setCategory={setCategory}
+                    bannedWord={bannedWord}
+                    setBannedWord={setBannedWord}
                 />
             </Grid>
             <Grid container justifyContent="center">
                 <Button
                     startIcon={<AddIcon />}
                     style={{ color: '#FF0000' }}
-                    onClick={AddCategoryHandler}
+                    onClick={AddBannedWordHandler}
                 >
                     Add
                 </Button>
                 <Button
                     startIcon={<RemoveIcon />}
                     style={{ color: '#000000' }}
-                    onClick={RemoveCategoryHandler}
+                    onClick={RemoveBannedWordHandler}
                 >
                     Remove
                 </Button>
@@ -105,4 +105,4 @@ const EditCategory = ({ token, setError, setSuccess }) => {
     )
 }
 
-export default EditCategory;
+export default EditBannedWord;

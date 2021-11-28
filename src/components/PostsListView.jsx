@@ -1,3 +1,5 @@
+// Child component of PostsList which creates the ListView for posts 
+
 import * as React from 'react';
 import { Grid, Typography, TextField, Button } from '@mui/material'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -8,6 +10,7 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
 const PostsListView = ({ token, posts, setError, isloggedin, showButtons, setPosts }) => {
     const [redirectCreatePost, setRedirectCreatePost] = React.useState(false)
+    // state that holds filtered posts
     const [filteredposts, setFilteredPosts] = React.useState([])
     const [keyword, setKeyword] = React.useState('')
 
@@ -15,11 +18,14 @@ const PostsListView = ({ token, posts, setError, isloggedin, showButtons, setPos
         setKeyword(event.target.value)
     }
 
+    // Search Feature
+    // Search doesn't make rest call just filters posts state with keyword
     React.useEffect(() => {
         if (keyword != '') setFilteredPosts(posts.filter((post) => { return post.postHeading.toUpperCase().startsWith(keyword.toUpperCase()) }))
         else setFilteredPosts(posts)
     }, [keyword, posts])
 
+    // REST call to remove a post (only admin)
     const deleteHandler = async (postid) => {
         const deleteResp = await fetch(`https://forum-backend.azurewebsites.net/removepost`, {
             method: 'POST',
@@ -43,6 +49,7 @@ const PostsListView = ({ token, posts, setError, isloggedin, showButtons, setPos
         }))
     }
 
+    // REST call to unreport post (only admin)
     const unreportHandler = async (postid) => {
         const unreportResp = await fetch(`https://forum-backend.azurewebsites.net/unreport`, {
             method: 'POST',
@@ -67,6 +74,7 @@ const PostsListView = ({ token, posts, setError, isloggedin, showButtons, setPos
         }))
     }
 
+    // onClicking on the textfield redirects to /createPost
     if (redirectCreatePost) return (<Navigate to='createPost' />)
     return (
         <Grid container item>

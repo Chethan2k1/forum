@@ -1,3 +1,5 @@
+// SignUp Component
+
 import * as React from 'react';
 import { Button, CssBaseline, TextField, Link, Grid, Box } from '@mui/material'
 import Typography from '@mui/material/Typography';
@@ -14,6 +16,7 @@ export default function SignUp() {
   const [error, setError] = React.useState(null)
   const [redirect, setRedirect] = React.useState(false)
 
+  // REST call to post Register Details
   const PostRegisterDetails = async (username, email, password) => {
     const registerResp = await fetch(`https://forum-backend.azurewebsites.net/register`, {
       method: 'POST',
@@ -30,6 +33,7 @@ export default function SignUp() {
     }
   };
 
+  // Basic checks for fields and encrypt the password
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);

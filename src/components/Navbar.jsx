@@ -1,3 +1,5 @@
+// A Navbar which is present through all routes
+
 import * as React from 'react';
 import { Link } from 'react-router-dom'
 import { makeStyles, createTheme, MuiThemeProvider } from '@material-ui/core/styles';
@@ -34,6 +36,7 @@ const theme = createTheme({
 const Navbar = ({ username, isloggedin, isadmin, ismod }) => {
     const classes = useStyles();
 
+    // Right bar shows Sign In/Out if logged in and Username with dropdown otherwise
     const Rightbar = ({ username }) => {
         const [anchorEl, setAnchorEl] = React.useState(null);
 

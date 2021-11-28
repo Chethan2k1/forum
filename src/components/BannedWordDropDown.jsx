@@ -1,48 +1,48 @@
-// Component used for drop down of categories
-
+// Component which is used as DropDown for Banned Words with Search feature
 import * as React from 'react';
 import { Button, Grid, TextField, Menu, MenuItem } from '@mui/material'
 
-const CategoryDropDown = ({ setError, category, setCategory }) => {
-    // states for dropdown
+const BannedWordDropDown = ({ setError, bannedWord, setBannedWord }) => {
     const [keyword, setKeyword] = React.useState('');
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const [categories, setCategories] = React.useState([]);
+    const [bannedWords, setBannedWords] = React.useState([]);
 
+    // Opens the Menu
     const openMenu = (event) => {
         setAnchorEl(event.currentTarget);
     }
 
     const onClick = (event) => {
-        setCategory(event.target.id);
+        setBannedWord(event.target.id);
         setAnchorEl(null);
     }
 
+    // Allows "Enter" event to be considered as select option
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
-            setCategory(keyword)
+            setBannedWord(keyword)
             setAnchorEl(null)
         }
     }
 
-    // REST call which gets all categories
-    const getCategories = async () => {
-        const categoriesResults = await fetch(`https://forum-backend.azurewebsites.net/getcategories?keyword=${keyword}`, {
+    // gets all banned words
+    const getBannedWords = async () => {
+        const bannedWordsResults = await fetch(`https://forum-backend.azurewebsites.net/getbannedwords?keyword=${keyword}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
         })
 
-        const catbody = await categoriesResults.json();
+        const bannedWords = await bannedWordsResults.json();
 
-        if (catbody.error != null) setError(catbody.error)
-        else setCategories(catbody);
+        if (bannedWords.error != null) setError(bannedWords.error)
+        else setBannedWords(bannedWords);
     }
 
-    // make the REST call every time keyword changes
+    // reload the banned words everytime there is a change in keyword
     React.useEffect(async () => {
-        await getCategories();
+        await getBannedWords();
     }, [keyword])
 
     const handleChange = (event) => {
@@ -57,22 +57,22 @@ const CategoryDropDown = ({ setError, category, setCategory }) => {
                 onClick={openMenu}
                 sx={{ mt: 3, mb: 2, marginLeft: 1 }}
             >
-                {(category == '') ? "category" : `c/${category}`}
+                {(bannedWord == '') ? "banned word" : `${bannedWord}`}
             </Button>
             <Menu
                 anchorEl={anchorEl}
                 open={Boolean(anchorEl)}
                 onClose={() => {
-                    setCategory(keyword)
+                    setBannedWord(keyword)
                     setAnchorEl(null)
                 }}
                 onKeyDown={handleKeyDown}
             >
-                <TextField value={keyword} onChange={handleChange} label="Category" style={{ margin: 1 }}></TextField>
+                <TextField value={keyword} onChange={handleChange} label="Banned Word" style={{ margin: 1 }}></TextField>
                 {
-                    categories.map(({ name, categoryid }) => {
+                    bannedWords.map(({ word }) => {
                         return (
-                            <MenuItem key={categoryid} id={name} onClick={onClick}> {`c/${name}`} </MenuItem>
+                            <MenuItem key={word} id={word} onClick={onClick}> {word} </MenuItem>
                         )
                     })
                 }
@@ -81,4 +81,4 @@ const CategoryDropDown = ({ setError, category, setCategory }) => {
     );
 }
 
-export default CategoryDropDown;
+export default BannedWordDropDown;

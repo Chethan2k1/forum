@@ -1,3 +1,5 @@
+// Component which shows Error Message
+
 import React from 'react'
 import { Grid } from '@mui/material'
 import Typography from '@mui/material/Typography';

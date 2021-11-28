@@ -1,20 +1,18 @@
+// The parent Component which is used for Add/Remove Moderator Words
+
 import * as React from 'react';
 import { Grid, Container, Typography, Button } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import ErrorMessage from './Error'
-import SuccessMessage from './Success'
 import CategoryDropDown from './CategoryDropDown'
 import UsernameDropDown from './UsernameDropDown'
 
-const EditModerator = ({ token }) => {
-    const [error, setError] = React.useState('')
-    // for edit category
-    const [category, setCategory] = React.useState('')
+const EditModerator = ({ token, setError, setSuccess }) => {
     // for edit moderator
     const [username, setUsername] = React.useState('')
     const [cat, setCat] = React.useState('')
 
+    // REST call to add a moderator (Only admin)
     const AddModeratorHandler = async () => {
         if (username == '' || cat == '') {
             setError("Fill all details!")
@@ -34,10 +32,16 @@ const EditModerator = ({ token }) => {
         })
 
         const resp = await addmodresp.json()
-        if (resp.error != null) setError(resp.error)
-        else setError('')
+        if (resp.error != null) { 
+            setError(resp.error)
+            setSuccess('')
+        } else {
+            setError('')
+            setSuccess(`Successfully added u/${username} as mod for c/${cat}!`)
+        }
     }
 
+    // REST call to remove Moderator (Only admins)
     const RemoveModeratorHandler = async () => {
         if (username == '' || cat == '') {
             setError("Fill all details!")
@@ -57,8 +61,13 @@ const EditModerator = ({ token }) => {
         })
 
         const resp = await removemodresp.json()
-        if (resp.error != null) setError(resp.error)
-        else setError('')
+        if (resp.error != null) { 
+            setError(resp.error)
+            setSuccess('')
+        } else {
+            setError('')
+            setSuccess(`Successfully removed u/${username} as mod for c/${cat}!`)
+        }
     }
 
     return (
@@ -69,9 +78,6 @@ const EditModerator = ({ token }) => {
                 justify="center"
                 direction="column"
             >
-                <ErrorMessage
-                    msg={error}
-                />
                 <Typography variant="h5">
                     Add/Remove Moderator
                 </Typography>

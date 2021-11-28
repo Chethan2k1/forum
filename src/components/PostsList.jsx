@@ -1,3 +1,5 @@
+// Parent component that Lists all posts
+
 import React, { useEffect, useState } from 'react';
 import { CssBaseline } from '@mui/material'
 import Container from '@mui/material/Container';
@@ -17,7 +19,8 @@ const theme = createTheme({
 const PostsLists = ({ isloggedin }) => {
     const [error, setError] = useState('')
     const [posts, setPosts] = useState([])
-
+    
+    // REST call to fetch all posts
     const fetchPosts = async () => {
         const postsResults = await fetch(`https://forum-backend.azurewebsites.net/posts`, {
             method: 'GET',

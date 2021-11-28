@@ -1,3 +1,5 @@
+// SignIn component
+
 import * as React from 'react';
 import { Button, CssBaseline, TextField, Link, Grid, Box } from '@mui/material'
 import Typography from '@mui/material/Typography';
@@ -14,6 +16,7 @@ export default function SignIn({setUsername, setPoints, setIsloggedin, setToken,
   const [error, setError] = React.useState(null)
   const [redirect, setRedirect] = React.useState(false)
 
+  // REST call to post login details
   const PostLoginDetails = async (email, password) => {
     const loginResp = await fetch(`https://forum-backend.azurewebsites.net/login`, {
       method: 'POST',
@@ -26,6 +29,7 @@ export default function SignIn({setUsername, setPoints, setIsloggedin, setToken,
     const content = await loginResp.json();
     if (content.error != null) setError(content.error)
     else { 
+      // set states
       setRedirect(true)
       setUsername(content.username)
       setPoints(content.bbpoints)
@@ -37,6 +41,7 @@ export default function SignIn({setUsername, setPoints, setIsloggedin, setToken,
     }
   };
 
+  // helper function that checks for the fields and converts password to SHA256
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);

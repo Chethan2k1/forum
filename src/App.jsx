@@ -1,3 +1,5 @@
+// The main component where the client-side routing is mentioned
+
 import React, { useState } from 'react'
 import SignIn from './components/SignIn'
 import SignUp from './components/SignUp'
@@ -43,6 +45,7 @@ function App() {
                     />
                     <Route path='/register' exact element={<SignUp />} />
                     {
+                        // must be logged in to create the Post
                         isloggedin
                             ? <Route path='/createPost' element={
                                 <CreatePost
@@ -54,6 +57,7 @@ function App() {
                     <Route path='/post/:postid' element={<ShowPost isloggedin={isloggedin} token={token} />} />
                     <Route path='/about/:username' element={<About username={username} />} />
                     {
+                        // must be logged in and be either a mod or admin to access this route
                         (isloggedin && (ismod || isadmin)) ? (<Route path='/modcontrol' element={
                             <Modcontrol
                                 token={token}
@@ -61,6 +65,7 @@ function App() {
                         />) : <Route />
                     }
                     {
+                        // must be loggedin and admin to access this route
                         (isloggedin && isadmin) ? (<Route path='/admincontrol' element={
                             <Admincontrol
                                 token={token}

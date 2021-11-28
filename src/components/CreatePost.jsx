@@ -1,3 +1,5 @@
+// Component for Creating Post
+
 import * as React from 'react';
 import { Button, CssBaseline, Grid, TextField, Link } from '@mui/material'
 import Container from '@mui/material/Container';
@@ -28,12 +30,15 @@ const CreatePost = ({ token }) => {
     // state for category chooser
     const [category, setCategory] = React.useState('');
 
+    // onSubmit Handler
     const onSubmit = async () => {
+        // check if the fields are filled
         if (title == '' || body == '' || category == '') {
             setError('All fields must be filled!')
             return;
         };
 
+        // create post request
         const createPostResult = await fetch(`https://forum-backend.azurewebsites.net/createpost`, {
             method: 'POST',
             headers: {
@@ -55,6 +60,7 @@ const CreatePost = ({ token }) => {
         }
     }
 
+    // redirect after submitting to the post
     if (redirect) return <Navigate to={`/post/${postid}`} />
     return (
         <ThemeProvider theme={theme}>

@@ -1,3 +1,5 @@
+// A Component to display a message in Green
+
 import React from 'react'
 import { Grid } from '@mui/material'
 import Typography from '@mui/material/Typography';

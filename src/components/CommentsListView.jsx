@@ -1,3 +1,5 @@
+// The child component of CommentsList which creates the view for comments 
+
 import * as React from 'react';
 import getTime from '../utils/time';
 import { Grid, Button } from '@mui/material'
@@ -9,6 +11,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
 const CommentsListView = ({ token, comments, setComments, setError, category, isloggedin = true, showButtons = false }) => {
+    // REST call for reporting a comment
     const commentReport = async (commentid) => {
         const reportResp = await fetch(`https://forum-backend.azurewebsites.net/report`, {
             method: 'POST',
@@ -27,6 +30,7 @@ const CommentsListView = ({ token, comments, setComments, setError, category, is
         if (report.error != null) setError(report.error)
     }
 
+    // REST call for removing a comment (Can be done only by moderators/admins)
     const deleteHandler = async (commentid) => {
         const deleteResp = await fetch(`https://forum-backend.azurewebsites.net/removecomment`, {
             method: 'POST',
@@ -50,6 +54,7 @@ const CommentsListView = ({ token, comments, setComments, setError, category, is
         }))
     }
 
+    // REST call for unreporting a comment (Can be done only by moderators/admins)
     const unreportHandler = async (commentid) => {
         const unreportResp = await fetch(`https://forum-backend.azurewebsites.net/unreport`, {
             method: 'POST',

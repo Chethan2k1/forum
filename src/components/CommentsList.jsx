@@ -1,3 +1,5 @@
+// The parent component for displaying comments
+
 import React, { useEffect, useState } from 'react';
 import { CssBaseline, Grid, Button } from '@mui/material'
 import Container from '@mui/material/Container';
@@ -23,6 +25,7 @@ const CommentsList = ({ isloggedin, postid, token, category }) => {
     const [comments, setComments] = useState([])
     const [body, setBody] = React.useState("**Hello world!!!**");
     const [selectedTab, setSelectedTab] = React.useState("write");
+    // convertor object is used for changing jsx to corresponding HTML
     const converter = new Showdown.Converter({
         tables: true,
         simplifiedAutoLink: true,
@@ -30,6 +33,7 @@ const CommentsList = ({ isloggedin, postid, token, category }) => {
         tasklists: true
     });
 
+    // REST call to fetch comments
     const fetchComments = async () => {
         const commentsResults = await fetch(`https://forum-backend.azurewebsites.net/getcomments?postid=${postid}`, {
             method: 'GET',
@@ -43,6 +47,7 @@ const CommentsList = ({ isloggedin, postid, token, category }) => {
         else setComments(content)
     }
 
+    // REST call to create a new comment
     const postComment = async () => {
         const commResults = await fetch(`https://forum-backend.azurewebsites.net/createcomment`, {
             method: 'POST',
@@ -61,6 +66,7 @@ const CommentsList = ({ isloggedin, postid, token, category }) => {
         else fetchComments();
     }
 
+    // Any state changes make a REST call to get all comments from backedn
     // keeping the dependency list empty to make sure that the fetchComments is called everytime this component is rendered
     useEffect(async () => {
         await fetchComments()

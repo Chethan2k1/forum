@@ -1,3 +1,5 @@
+// parent component that has mod control features
+
 import * as React from 'react'
 import { CssBaseline, Grid, Typography } from '@mui/material'
 import Container from '@mui/material/Container';
@@ -9,6 +11,7 @@ const Modcontrol = ({ token }) => {
     const [error, setError] = React.useState('')
     const [reported, setReported] = React.useState({ posts: [], comments: [] })
 
+    // fetch reported psots and comments
     const fetchReported = async () => {
         const reportedResponse = await fetch(`https://forum-backend.azurewebsites.net/reported`, {
             method: 'GET',
@@ -25,6 +28,7 @@ const Modcontrol = ({ token }) => {
         }
     }
 
+    // helper function to change the state of posts used by children of this component thereby rendering parent component
     const setPosts = (posts) => {
         setReported({
             posts,
@@ -32,6 +36,7 @@ const Modcontrol = ({ token }) => {
         })
     }
 
+    // helper function to change the state of comments used by children of this component thereby rendering parent component
     const setComments = (comments) => {
         setReported({
             posts: reported.posts,
@@ -39,6 +44,7 @@ const Modcontrol = ({ token }) => {
         })
     }
 
+    // change in any state will get all reported posts and comments
     React.useEffect(fetchReported, [])
 
     return (
