@@ -27,6 +27,9 @@ Finally to run the server,
 
 ```
 npm i
+npm run dbdrop # drops the db if it already exists
+npm run dbcreate # creates the db in the database
+npm run migrate # runs the migrations to setup the database
 npm start
 ```
 
