@@ -3,10 +3,12 @@ import { Grid, Container, Typography, Button } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import ErrorMessage from './Error'
+import SuccessMessage from './Success'
 import CategoryDropDown from './CategoryDropDown'
 
 const EditCategory = ({ token }) => {
     const [error, setError] = React.useState('')
+    const [success, setSuccess] = React.useState('')
     const [anchorEl, setAnchorEl] = React.useState(null)
     const [category, setCategory] = React.useState('')
 
@@ -28,8 +30,13 @@ const EditCategory = ({ token }) => {
         })
 
         const resp = await addcatresp.json()
-        if (resp.error != null) setError(resp.error)
-        else setError('')
+        if (resp.error != null) { 
+            setError(resp.error)
+            setSuccess('')
+        } else {
+            setError('')
+            setSuccess(`Successfully added ${category}!`)
+        }
     }
 
     const RemoveCategoryHandler = async () => {
@@ -50,8 +57,13 @@ const EditCategory = ({ token }) => {
         })
 
         const resp = await removecatResp.json()
-        if (resp.error != null) setError(resp.error)
-        else setError('')
+        if (resp.error != null) { 
+            setError(resp.error)
+            setSuccess('')
+        } else { 
+            setError('')
+            setSuccess(`Successfully removed ${category}!`)
+        }
     }
 
     return (
@@ -62,6 +74,9 @@ const EditCategory = ({ token }) => {
                 justify="center"
                 direction="column"
             >
+                <SuccessMessage 
+                    msg={success}
+                />
                 <ErrorMessage
                     msg={error}
                 />

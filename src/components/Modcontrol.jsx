@@ -52,23 +52,37 @@ const Modcontrol = ({ token }) => {
                 direction="column"
             >
                 <Typography variant="h5"> Reported Posts </Typography>
-                <PostsListsView
-                    token={token}
-                    posts={reported.posts}
-                    setPosts={setPosts}
-                    setError={setError}
-                    isloggedin={false}
-                    showButtons={true}
-                />
+                <hr />
+                {(reported.posts.length == 0) ?
+                    (<Typography variant="h7"> --- No Reported Posts --- </Typography>)
+                    : (<PostsListsView
+                        token={token}
+                        posts={reported.posts}
+                        setPosts={setPosts}
+                        setError={setError}
+                        isloggedin={false}
+                        showButtons={true}
+                    />)
+                }
+                <hr />
                 <Typography variant="h5"> Reported Comments </Typography>
-                <CommentsListView
-                    token={token}
-                    comments={reported.comments}
-                    setComments={setComments}
-                    setError={setError}
-                    isloggedin={false}
-                    showButtons={true}
+                <hr
+                    style={{
+                        color: 'black',
+                        backgroundColor: 'black',
+                        height: 5
+                    }}
                 />
+                {(reported.comments.length == 0) ?
+                    (<Typography variant="h7"> --- No Reported Comments --- </Typography>)
+                    : (<CommentsListView
+                        token={token}
+                        comments={reported.comments}
+                        setComments={setComments}
+                        setError={setError}
+                        isloggedin={false}
+                        showButtons={true}
+                    />)}
             </Grid>
         </Container>
     );

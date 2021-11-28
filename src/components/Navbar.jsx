@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom'
 import { makeStyles, createTheme, MuiThemeProvider } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Typography, Button, Menu, MenuItem } from '@mui/material';
+import { AppBar, Toolbar, Typography, Button, Menu, MenuItem, TextField, Grid } from '@mui/material';
 
 const useStyles = makeStyles(theme => ({
     title: {
         color: 'white',
-        flexGrow: 1,
         textDecoration: 'none'
     },
     menuItem: {
@@ -16,6 +15,9 @@ const useStyles = makeStyles(theme => ({
     username: {
         color: 'white',
         textDecoration: 'none'
+    },
+    input: {
+        color: 'white'
     }
 }));
 
@@ -43,7 +45,7 @@ const Navbar = ({ username, isloggedin, isadmin, ismod }) => {
             setAnchorEl(null);
         }
 
-        if (username != '') {
+        if (isloggedin) {
             return (
                 <>
                     <Typography className={classes.username} onClick={openMenu} styles={{ cursor: 'pointer' }}>
@@ -71,9 +73,9 @@ const Navbar = ({ username, isloggedin, isadmin, ismod }) => {
                                 </MenuItem>) : (<div></div>)
                         }
                         <MenuItem>
-                            <Link to='/logout' className={classes.menuItem}>
+                            <a href='/' className={classes.menuItem}>
                                 Log Out
-                            </Link>
+                            </a>
                         </MenuItem>
                     </Menu>
                 </>
@@ -96,10 +98,17 @@ const Navbar = ({ username, isloggedin, isadmin, ismod }) => {
         <MuiThemeProvider theme={theme}>
             <AppBar position="static">
                 <Toolbar>
-                    <Typography component={Link} to="/" variant="h6" className={classes.title}>
-                        Forum
-                    </Typography>
-                    <Rightbar username={username} />
+                    <Grid container
+                        alignItems="center"
+                        justifyContent="space-between"
+                    >
+                        <Grid item>
+                            <Typography component={Link} to="/" variant="h6" className={classes.title}>
+                                Forum
+                            </Typography>
+                        </Grid>
+                        <Rightbar username={username} />
+                    </Grid>
                 </Toolbar>
             </AppBar>
         </MuiThemeProvider>

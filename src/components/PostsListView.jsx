@@ -8,6 +8,17 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
 const PostsListView = ({ token, posts, setError, isloggedin, showButtons, setPosts }) => {
     const [redirectCreatePost, setRedirectCreatePost] = React.useState(false)
+    const [filteredposts, setFilteredPosts] = React.useState([])
+    const [keyword, setKeyword] = React.useState('')
+
+    const onChangeHandler = async (event) => {
+        setKeyword(event.target.value)
+    }
+
+    React.useEffect(() => {
+        if (keyword != '') setFilteredPosts(posts.filter((post) => { return post.postHeading.toUpperCase().startsWith(keyword.toUpperCase()) }))
+        else setFilteredPosts(posts)
+    }, [keyword, posts])
 
     const deleteHandler = async (postid) => {
         const deleteResp = await fetch(`https://forum-backend.azurewebsites.net/removepost`, {
@@ -58,7 +69,7 @@ const PostsListView = ({ token, posts, setError, isloggedin, showButtons, setPos
 
     if (redirectCreatePost) return (<Navigate to='createPost' />)
     return (
-        <Grid container>
+        <Grid container item>
             <Grid container item
                 align="center"
                 alignItems="center"
@@ -67,7 +78,7 @@ const PostsListView = ({ token, posts, setError, isloggedin, showButtons, setPos
             >
                 {
                     (isloggedin) ? (<Grid item container alignItems="center" justify="flex-end" style={{
-                        width: 600,
+                        width: '70%',
                         borderRadius: 10,
                         margin: 5,
                     }}>
@@ -89,8 +100,14 @@ const PostsListView = ({ token, posts, setError, isloggedin, showButtons, setPos
                         }} />
                     </Grid>) : (<div></div>)
                 }
+                <TextField
+                    placeholder="Search"
+                    variant="filled"
+                    style={{ width: '70%', marginTop: 10 }}
+                    onChange={onChangeHandler}
+                />
                 {
-                    posts.map(({ category, username, postHeading, createdAt, postid }) => {
+                    filteredposts.map(({ category, username, postHeading, createdAt, postid }) => {
                         return (
 
                             <Grid
@@ -103,7 +120,7 @@ const PostsListView = ({ token, posts, setError, isloggedin, showButtons, setPos
                                     margin: 5,
                                     backgroundColor: '#D3D3D3'
                                 }}>
-                                <Link to={`post/${postid}`} style={{ textDecoration: 'none', color: 'black' }}>
+                                <Link to={`/post/${postid}`} style={{ textDecoration: 'none', color: 'black' }}>
                                     <Grid container direction="column">
                                         <Grid item container justify="flex-end">
                                             <Grid item style={{ marginTop: 5, marginLeft: 20 }}> <b>{`c/${category}`}</b> </Grid>
